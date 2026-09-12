@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # 03:00 UTC = meia-noite em Fortaleza (UTC-3).
+    - cron: '0 3 * * *'
 
 permissions:
   contents: read
@@ -15,9 +18,14 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
       - name: Baixar projeto
         uses: actions/checkout@v6
+        with:
+          ref: main
 
       - name: Preparar Python
         uses: actions/setup-python@v7
@@ -27,8 +35,26 @@ jobs:
       - name: Configurar Pages
         uses: actions/configure-pages@v5
 
+      - name: Testar sincronizacao
+        run: python -X utf8 -m unittest discover -s tests -v
+
+      - name: Consultar listas do SIGAA
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: python -X utf8 sync_sigaa.py
+
       - name: Gerar paginas
         run: python -X utf8 build.py
+
+      - name: Salvar resultado da checagem no repositorio
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.tsv sync-state.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Atualiza checagem das listas do SIGAA"
+            git push origin HEAD:main
+          fi
 
       - name: Enviar arquivos do site
         uses: actions/upload-pages-artifact@v4
