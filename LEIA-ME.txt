@@ -33,8 +33,19 @@ Os caminhos de navegação, estilos e fotos são relativos, compatíveis com
 o servidor local e com a publicação em subpastas, como no GitHub Pages.
 No Pages, publique o conteúdo de dist como raiz do site.
 
-Editar localmente não altera o site publicado. Uma nova publicação
-é necessária para levar as alterações para a internet.
+PUBLICAÇÃO AUTOMÁTICA NO GITHUB PAGES
+1. No repositório do GitHub, abra Settings > Pages.
+2. Em Build and deployment > Source, selecione GitHub Actions.
+3. Envie .github/workflows/pages.yml e as alterações do projeto para main.
+4. Na aba Actions, acompanhe "Publicar site no Pages" até concluir.
+5. O endereço publicado aparece em Settings > Pages.
+
+A cada push na main, o GitHub executa build.py e publica o conteúdo de dist.
+Para publicar manualmente, abra Actions > Publicar site no Pages > Run workflow.
+Altere os dados em data.tsv e a estrutura das páginas em build.py.
+Alterações feitas diretamente nos HTML são substituídas na publicação.
+Mantenha dist/style.css e dist/photos no repositório: o gerador usa esses arquivos.
+Editar localmente só altera o site publicado após enviar as mudanças ao GitHub.
 
 Esta cópia exportada não contém credenciais nem o histórico Git.
 A versão publicada permanece inalterada.
