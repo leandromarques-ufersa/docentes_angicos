@@ -1,0 +1,39 @@
+PROJETO DOCENTES UFERSA — EDIÇÃO LOCAL
+
+1. Extraia o ZIP e abra a pasta docentes-ufersa no VS Code.
+2. Com Python 3 instalado, abra o terminal do VS Code nessa pasta.
+3. Execute no Windows:
+   py -m http.server 8000 --directory dist
+4. Abra http://localhost:8000 no navegador.
+   Encerre com Ctrl+C no terminal.
+
+ARQUIVOS
+- dist/index.html: página inicial.
+- dist/denge/index.html: docentes do DENGE.
+- dist/dceti/index.html: docentes do DCETI.
+- dist/dch/index.html: docentes do DCH.
+- dist/style.css: cores, tipografia e layout.
+- dist/photos/: fotos usadas nos cartões.
+- data.tsv: dados dos docentes, separados por tabulações.
+- build.py: gera as quatro páginas a partir dos dados e do modelo.
+- photos.json: associação de cada docente à sua foto.
+- status.json: campos com limitações na consulta original.
+- photo-sources.json: URLs de origem das fotos.
+
+EDIÇÃO
+Para mudar as cores e a aparência, edite dist/style.css.
+Para mudar dados dos docentes, edite data.tsv e execute:
+   py build.py
+Para mudar a estrutura dos cartões ou da página inicial, edite build.py
+e execute o mesmo comando.
+Também é possível editar os HTML diretamente, mas essas alterações
+serão substituídas caso você execute build.py novamente.
+
+Use o servidor local: abrir index.html com duplo clique pode quebrar
+os links e imagens, pois o site usa caminhos iniciados por /.
+
+Editar localmente não altera o site publicado. Uma nova publicação
+é necessária para levar as alterações para a internet.
+
+Esta cópia exportada não contém credenciais nem o histórico Git.
+A versão publicada permanece inalterada.
