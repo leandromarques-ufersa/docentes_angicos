@@ -51,15 +51,15 @@ Esta cópia exportada não contém credenciais nem o histórico Git.
 A versão publicada permanece inalterada.
 
 
-CHECAGEM DI?RIA DOS DEPARTAMENTOS
-O workflow consulta as tr?s listas p?blicas do SIGAA diariamente ?s 00:00
+CHECAGEM SEMANAL DOS DEPARTAMENTOS
+O workflow consulta as tr?s listas p?blicas do SIGAA todo domingo, às 00:00
 em Fortaleza (03:00 UTC). O GitHub pode atrasar o in?cio da execu??o.
 Tamb?m ? poss?vel consultar agora em Actions > Publicar site no Pages > Run workflow.
 Envios comuns para main publicam o projeto sem consultar novamente o SIGAA.
 
 A automa??o compara docentes pelo SIAPE e departamento. Novas entradas aparecem
 na pr?xima publica??o bem-sucedida. Uma aus?ncia s? remove um cart?o ap?s duas
-checagens completas, separadas por pelo menos seis horas (normalmente dois dias).
+checagens completas, separadas por pelo menos seis horas (normalmente em dois domingos consecutivos).
 Se o docente reaparecer, a aus?ncia pendente ? cancelada. Durante a confirma??o
 uma transfer?ncia pode aparecer temporariamente nos dois departamentos.
 Uma troca simult?nea ? registrada como entrada e sa?da, sem presumir que uma
@@ -79,8 +79,8 @@ n?o informados e as iniciais at? que esses dados sejam complementados.
 
 Com a p?gina aberta, o navegador consulta version.json a cada cinco minutos e
 ao retornar ? aba. Se houver outra vers?o, aparece o bot?o "Atualizar p?gina".
-A checagem di?ria sem mudan?a de conte?do n?o produz esse aviso. O rodap? tamb?m
-indica quando a ?ltima consulta bem-sucedida tem mais de tr?s dias.
+A checagem semanal sem mudan?a de conte?do n?o produz esse aviso. O rodap? tamb?m
+indica quando a ?ltima consulta bem-sucedida tem mais de oito dias.
 
 O workflow grava data.tsv e sync-state.json na main usando o GITHUB_TOKEN padr?o;
 n?o ? necess?rio cadastrar senha ou token pessoal. A publica??o ocorre no mesmo

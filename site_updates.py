@@ -1,4 +1,4 @@
-"""Public freshness metadata and a version tied to content, not daily checks."""
+"""Public freshness metadata and a version tied to content, not scheduled checks."""
 import hashlib
 import html
 import json

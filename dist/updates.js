@@ -24,7 +24,7 @@
           }).format(checked);
           freshness.textContent = `Listas verificadas em ${formatted} (Fortaleza).`;
           if (latest.pending_removals) freshness.textContent += ' Algumas ausências aguardam confirmação.';
-          if (Date.now() - checked.getTime() > 3 * 86400000) {
+          if (Date.now() - checked.getTime() > 8 * 86400000) {
             freshness.textContent += ' A checagem está atrasada; consulte também o SIGAA.';
           }
         }

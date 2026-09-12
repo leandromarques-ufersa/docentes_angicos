@@ -104,7 +104,7 @@ def fetch(department):
     url = 'https://sigaa.ufersa.edu.br/sigaa/public/departamento/professores.jsf?id=' + DEPARTMENTS[department][0]
     for attempt in range(3):
         try:
-            request = Request(url, headers={'User-Agent': 'DocentesAngicos/1.0 (daily public roster check)'})
+            request = Request(url, headers={'User-Agent': 'DocentesAngicos/1.0 (weekly public roster check)'})
             with urlopen(request, timeout=40) as response:
                 if urlsplit(response.url).hostname != 'sigaa.ufersa.edu.br':
                     raise ValueError('Redirecionamento inesperado')

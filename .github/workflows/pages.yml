@@ -5,8 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # 03:00 UTC = meia-noite em Fortaleza (UTC-3).
-    - cron: '0 3 * * *'
+    # Domingo às 03:00 UTC = domingo à meia-noite em Fortaleza (UTC-3).
+    - cron: '0 3 * * 0'
 
 permissions:
   contents: read
