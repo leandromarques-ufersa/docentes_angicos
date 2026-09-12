@@ -29,8 +29,9 @@ e execute o mesmo comando.
 Também é possível editar os HTML diretamente, mas essas alterações
 serão substituídas caso você execute build.py novamente.
 
-Use o servidor local: abrir index.html com duplo clique pode quebrar
-os links e imagens, pois o site usa caminhos iniciados por /.
+Os caminhos de navegação, estilos e fotos são relativos, compatíveis com
+o servidor local e com a publicação em subpastas, como no GitHub Pages.
+No Pages, publique o conteúdo de dist como raiz do site.
 
 Editar localmente não altera o site publicado. Uma nova publicação
 é necessária para levar as alterações para a internet.
