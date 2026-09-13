@@ -1,16 +1,18 @@
-import csv,html,json,pathlib
+import csv,html,json,pathlib,shutil
 from site_updates import prepare, footer_status, script
 metadata=prepare()
 P=pathlib.Path(__file__).parent
+(P/'dist/assets').mkdir(parents=True,exist_ok=True)
+shutil.copyfile(P/'assets/ufersa_logo.png',P/'dist/assets/ufersa_logo.png')
 D=[dict(r) for r in csv.DictReader((P/'data.tsv').open(encoding='utf-8'),delimiter='\t')]
 def e(s):return html.escape(str(s or ''),quote=True)
 DEPS={'DENGE':{'name':'Departamento de Engenharias','short':'Engenharias','id':'933','color':'#b84415','pale':'#fff3ec','number':'01'},'DCETI':{'name':'Departamento de Ciências Exatas e Tecnologia da Informação','short':'Ciências Exatas e Tecnologia da Informação','id':'932','color':'#067568','pale':'#eaf8f3','number':'02'},'DCH':{'name':'Departamento de Ciências Humanas','short':'Ciências Humanas','id':'934','color':'#733bb9','pale':'#f4effc','number':'03'}}
 photos={}
 if (P/'photos.json').exists():photos=json.loads((P/'photos.json').read_text(encoding='utf-8'))
 sub={'3552919','3527688','1044779','3511726','1246564'}
-def head(title,root='./'):return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Conheça os docentes de DENGE, DCETI e DCH da UFERSA, Campus Angicos. Formação, contatos e links acadêmicos."><title>'+e(title)+' | Docentes UFERSA Angicos</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%231943c9%27/%3E%3Cpath d=%27M8 8v10a8 8 0 0016 0V8h-5v10a3 3 0 01-6 0V8z%27 fill=%27white%27/%3E%3C/svg%3E"><link rel="stylesheet" href="'+root+'style.css"></head>'
+def head(title,root='./'):return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Conheça os docentes de DENGE, DCETI e DCH da UFERSA, Campus Angicos. Formação, contatos e links acadêmicos."><title>'+e(title)+' | Docentes UFERSA Angicos</title><link rel="icon" type="image/png" href="'+root+'assets/ufersa_logo.png"><link rel="stylesheet" href="'+root+'style.css"></head>'
 def nav(active='',root='./'):
- return '<a class="skip" href="#conteudo">Pular para o conteúdo</a><header class="top"><a class="brand" href="'+root+'"><span class="brandmark">U</span><span>UFERSA<span class="brand-sub">CAMPUS ANGICOS</span></span></a><nav aria-label="Navegação principal"><a href="'+root+'" '+('aria-current="page"' if not active else '')+'>Início</a>'+''.join('<a href="'+root+k.lower()+'/" '+('aria-current="page"' if k==active else '')+'>'+k+'</a>' for k in DEPS)+'</nav></header>'
+ return '<a class="skip" href="#conteudo">Pular para o conteúdo</a><header class="top"><a class="brand" href="'+root+'"><img class="brandmark" src="'+root+'assets/ufersa_logo.png" alt="" width="48" height="48"><span>UFERSA<span class="brand-sub">CAMPUS ANGICOS</span></span></a><nav aria-label="Navegação principal"><a href="'+root+'" '+('aria-current="page"' if not active else '')+'>Início</a>'+''.join('<a href="'+root+k.lower()+'/" '+('aria-current="page"' if k==active else '')+'>'+k+'</a>' for k in DEPS)+'</nav></header>'
 def footer(root='./'):return '<footer><div><strong>Docentes · UFERSA Angicos</strong><p>Diretório de apresentação baseado nas páginas públicas do SIGAA.</p></div><div class="footnote"><span id="sync-freshness">'+footer_status(metadata)+'</span><br>Perfis e contatos: consulta original em 12/09/2026.<br>Confira as informa??es atuais no SIGAA.</div></footer>'+script(metadata,root)
 def card(r,root='../'):
  photo=photos.get(r['id'],'')
