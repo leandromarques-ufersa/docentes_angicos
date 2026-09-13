@@ -1,4 +1,4 @@
-"""Public freshness metadata and a version tied to content, not scheduled checks."""
+"""Build timestamp and public synchronization metadata."""
 import hashlib
 import html
 import json
@@ -15,7 +15,9 @@ def prepare():
         digest.update((ROOT / name).read_bytes())
     state_path = ROOT / 'sync-state.json'
     state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {}
-    metadata = {'version': digest.hexdigest()[:20], 'checked_at': state.get('checked_at'),
+    metadata = {'version': digest.hexdigest()[:20],
+                'updated_at': datetime.now(timezone.utc).isoformat(),
+                'checked_at': state.get('checked_at'),
                 'last_change': state.get('last_change'),
                 'pending_removals': len(state.get('pending_removals', {}))}
     (ROOT / 'dist/version.json').write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
@@ -23,15 +25,6 @@ def prepare():
 
 
 def footer_status(metadata):
-    checked = metadata['checked_at']
-    if not checked:
-        return 'Listas: checagem automática ainda não realizada.'
-    local = datetime.fromisoformat(checked).astimezone(timezone(timedelta(hours=-3)))
-    text = 'Listas verificadas em ' + local.strftime('%d/%m/%Y às %H:%M') + ' (Fortaleza).'
-    if metadata['pending_removals']:
-        text += ' Algumas ausências aguardam confirmação.'
+    local = datetime.fromisoformat(metadata['updated_at']).astimezone(timezone(timedelta(hours=-3)))
+    text = '?ltima atualiza??o: ' + local.strftime('%d/%m/%Y ?s %H:%M') + ' (Fortaleza).'
     return html.escape(text)
-
-
-def script(metadata, root):
-    return '<script defer src="' + root + 'updates.js" data-version="' + metadata['version'] + '"></script>'

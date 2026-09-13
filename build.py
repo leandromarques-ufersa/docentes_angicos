@@ -1,5 +1,5 @@
 import csv,html,json,pathlib,shutil
-from site_updates import prepare, footer_status, script
+from site_updates import prepare, footer_status
 metadata=prepare()
 P=pathlib.Path(__file__).parent
 (P/'dist/assets').mkdir(parents=True,exist_ok=True)
@@ -13,7 +13,7 @@ sub={'3552919','3527688','1044779','3511726','1246564'}
 def head(title,root='./'):return '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Conheça os docentes de DENGE, DCETI e DCH da UFERSA, Campus Angicos. Formação, contatos e links acadêmicos."><title>'+e(title)+' | Docentes UFERSA Angicos</title><link rel="icon" type="image/png" href="'+root+'assets/ufersa_logo.png"><link rel="stylesheet" href="'+root+'style.css"></head>'
 def nav(active='',root='./'):
  return '<a class="skip" href="#conteudo">Pular para o conteúdo</a><header class="top"><a class="brand" href="'+root+'"><img class="brandmark" src="'+root+'assets/ufersa_logo.png" alt="" width="48" height="48"><span>UFERSA<span class="brand-sub">CAMPUS ANGICOS</span></span></a><div class="header-navigation"><nav aria-label="Navegação principal"><a href="'+root+'" '+('aria-current="page"' if not active else '')+'>Início</a>'+''.join('<a href="'+root+k.lower()+'/" '+('aria-current="page"' if k==active else '')+'>'+k+'</a>' for k in DEPS)+'</nav><a class="fullscreen-link" href="https://leandromarques-ufersa.github.io/corpo_docente/" target="_blank" rel="noopener noreferrer">Visualizar em tela cheia</a></div></header>'
-def footer(root='./'):return '<footer><div><strong>Docentes · UFERSA Angicos</strong><p>Diretório de apresentação baseado nas páginas públicas do SIGAA.</p></div><div class="footnote"><span id="sync-freshness">'+footer_status(metadata)+'</span><br>Perfis e contatos: consulta original em 12/09/2026.<br>Confira as informa??es atuais no SIGAA.</div></footer>'+script(metadata,root)
+def footer(root='./'):return '<footer><div><strong>Docentes · UFERSA Angicos</strong><p>Diretório de apresentação baseado nas páginas públicas do SIGAA.</p></div><div class="footnote"><span id="sync-freshness">'+footer_status(metadata)+'</span><br>Confira as informa??es atuais no SIGAA.</div></footer>'
 def card(r,root='../'):
  photo=photos.get(r['id'],'')
  if photo.startswith('/') and not photo.startswith('//'):photo=root+photo.lstrip('/')
